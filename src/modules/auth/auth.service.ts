@@ -33,14 +33,13 @@ export class AuthService {
       passwordHash,
       role: dto.role,
       displayName: dto.displayName,
-      profile: {}, // candidate/company profile fields handled via /users/profile
+      profile: {},
       isEmailVerified: false,
     });
 
-    // ✅ Generate OTP + send email
     const code = String(randomInt(100000, 999999));
     user.emailOtpHash = hashOtp(user.email, code);
-    user.emailOtpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 min
+    user.emailOtpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await user.save();
 
     await this.mail.sendOtp(user.email, code);
@@ -56,7 +55,6 @@ export class AuthService {
     const ok = await bcrypt.compare(dto.password, user.passwordHash);
     if (!ok) throw new UnauthorizedException('Invalid credentials');
 
-    // ❌ Block login until email verified (optional but recommended)
     if (!user.isEmailVerified) {
       throw new BadRequestException('Please check your email first');
     }
@@ -69,9 +67,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email: email.toLowerCase() }).exec();
     if (!user) throw new BadRequestException('User not found');
 
-    if (user.isEmailVerified) {
-      return { message: 'Email already verified' };
-    }
+    if (user.isEmailVerified) return { message: 'Email already verified' };
 
     if (!user.emailOtpHash || !user.emailOtpExpiresAt) {
       throw new BadRequestException('No OTP request found');
@@ -82,9 +78,7 @@ export class AuthService {
     }
 
     const incomingHash = hashOtp(user.email, code);
-    if (incomingHash !== user.emailOtpHash) {
-      throw new BadRequestException('Invalid code');
-    }
+    if (incomingHash !== user.emailOtpHash) throw new BadRequestException('Invalid code');
 
     user.isEmailVerified = true;
     user.emailOtpHash = null;
@@ -100,9 +94,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email: email.toLowerCase() }).exec();
     if (!user) throw new BadRequestException('User not found');
 
-    if (user.isEmailVerified) {
-      return { message: 'Email already verified' };
-    }
+    if (user.isEmailVerified) return { message: 'Email already verified' };
 
     const code = String(randomInt(100000, 999999));
     user.emailOtpHash = hashOtp(user.email, code);
@@ -117,18 +109,12 @@ export class AuthService {
   private async issueTokens(userId: string, role: string) {
     const accessToken = await this.jwt.signAsync(
       { sub: userId, role },
-      {
-        secret: process.env.JWT_ACCESS_SECRET,
-        expiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? '15m',
-      },
+      { secret: process.env.JWT_ACCESS_SECRET, expiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? '15m' },
     );
 
     const refreshToken = await this.jwt.signAsync(
       { sub: userId, role },
-      {
-        secret: process.env.JWT_REFRESH_SECRET,
-        expiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d',
-      },
+      { secret: process.env.JWT_REFRESH_SECRET, expiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d' },
     );
 
     return { accessToken, refreshToken };

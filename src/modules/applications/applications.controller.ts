@@ -14,21 +14,18 @@ import { ApplyDto } from './dto/apply.dto';
 export class ApplicationsController {
   constructor(private readonly apps: ApplicationsService) {}
 
-  // ✅ only JOB_SEEKER can apply
   @Roles(Role.JOB_SEEKER)
   @Post('apply')
   apply(@Req() req: any, @Body() dto: ApplyDto) {
     return this.apps.apply(req.user.userId, dto.jobId);
   }
 
-  // ✅ only JOB_SEEKER can view his applications
   @Roles(Role.JOB_SEEKER)
   @Get('user')
   listMine(@Req() req: any) {
     return this.apps.listForUser(req.user.userId);
   }
 
-  // ✅ only COMPANY can view received applications
   @Roles(Role.COMPANY)
   @Get('company')
   listCompany(@Req() req: any) {

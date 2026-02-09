@@ -8,16 +8,17 @@ type JwtPayload = { sub: string; role: string };
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly config: ConfigService) {
-    // ✅ Extract JWT from cookie OR Authorization header
     const cookieExtractor = (req: any): string | null => {
-      if (!req || !req.cookies) return null;
+      if (!req?.cookies) return null;
       return req.cookies.accessToken || null;
     };
 
     super({
+      // ✅ Bearer d'abord (Postman/Swagger)
+      // ✅ Cookie seulement si Bearer absent (Browser)
       jwtFromRequest: ExtractJwt.fromExtractors([
-        cookieExtractor, // ✅ first try cookie
-        ExtractJwt.fromAuthHeaderAsBearerToken(), // ✅ fallback to Bearer
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        cookieExtractor,
       ]),
       ignoreExpiration: false,
       secretOrKey: config.get<string>('JWT_ACCESS_SECRET'),
