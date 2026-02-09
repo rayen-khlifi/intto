@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsNotEmpty, MinLength } from 'class-validator';
 import { Role } from '../../../shared/enums/role.enum';
 
+
 export class RegisterDto {
   @ApiProperty({ example: 'rayen@example.com' })
   @IsNotEmpty({ message: 'Email obligatoire' })

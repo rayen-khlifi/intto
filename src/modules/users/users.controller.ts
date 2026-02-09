@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Req, UseGuards,Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
@@ -27,9 +27,9 @@ export class UsersController {
   update(@Req() req: any, @Body() dto: UpdateProfileDto) {
     return this.users.updateProfile(req.user.userId, dto);
   }
-   @Delete('me')
-deleteMe(@Req() req: any) {
-  return this.users.deleteUser(req.user.userId);
-}
 
+  @Delete('me')
+  deleteMe(@Req() req: any) {
+    return this.users.deleteUser(req.user.userId);
+  }
 }

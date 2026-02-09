@@ -1,0 +1,1 @@
+{"version":3,"file":"ats.module.js","sourceRoot":"","sources":["../../../../src/modules/ats/ats.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,sEAAiE;AACjE,0EAAqE;AAM9D,IAAM,SAAS,GAAf,MAAM,SAAS;CAAG,CAAA;AAAZ,8BAAS;oBAAT,SAAS;IAJrB,IAAA,eAAM,EAAC;QACN,SAAS,EAAE,CAAC,qCAAgB,EAAE,yCAAkB,CAAC;QACjD,OAAO,EAAE,CAAC,qCAAgB,EAAE,yCAAkB,CAAC;KAChD,CAAC;GACW,SAAS,CAAG"}

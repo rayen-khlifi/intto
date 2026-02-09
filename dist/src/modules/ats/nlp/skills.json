@@ -1,0 +1,19 @@
+[
+    { "name": "Java", "synonyms": ["Java SE", "JDK"], "domain": "IT" },
+    { "name": "JavaScript", "synonyms": ["JS"], "domain": "IT" },
+    { "name": "TypeScript", "synonyms": ["TS"], "domain": "IT" },
+    { "name": "React", "synonyms": ["ReactJS"], "domain": "IT" },
+    { "name": "NestJS", "synonyms": ["Nest"], "domain": "IT" },
+    { "name": "HTML", "synonyms": ["HTML5"], "domain": "IT" },
+    { "name": "CSS", "synonyms": ["CSS3", "Tailwind CSS", "Bootstrap"], "domain": "IT" },
+    { "name": "Node.js", "synonyms": ["NodeJS"], "domain": "IT" },
+    { "name": "MongoDB", "synonyms": ["Mongo"], "domain": "DB" },
+    { "name": "MySQL", "synonyms": ["SQL"], "domain": "DB" },
+    { "name": "Comptabilité", "synonyms": ["Accounting", "Bookkeeping"], "domain": "Finance" },
+    { "name": "Audit", "synonyms": ["Auditing"], "domain": "Finance" },
+    { "name": "Fiscalité", "synonyms": ["Tax", "Taxation"], "domain": "Finance" },
+    { "name": "Excel", "synonyms": ["Microsoft Excel", "Spreadsheets"], "domain": "Office" },
+    { "name": "Marketing", "synonyms": ["Digital Marketing"], "domain": "Marketing" },
+    { "name": "SEO", "synonyms": ["Search Engine Optimization"], "domain": "Marketing" },
+    { "name": "Communication", "synonyms": ["Communication Skills"], "domain": "Marketing" }
+]
